@@ -25,8 +25,6 @@ export class Program {
         if (!gl.getProgramParameter(this._id, gl.LINK_STATUS)) {
             const linkErrLog = gl.getProgramInfoLog(this._id);
             gl.useProgram(null);
-            if (buffer)
-                gl.deleteBuffer(buffer);
             if (this._id)
                 gl.deleteProgram(this._id);
             document.querySelector("p").innerHTML =
