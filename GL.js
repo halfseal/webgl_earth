@@ -1,6 +1,7 @@
 import {Program} from "./glfunctions/Program.js"
 import {Sphere} from "./Sphere.js";
 import {VAO} from "./glfunctions/VAO.js";
+import {status} from "./Status.js";
 
 let gl;
 
@@ -85,6 +86,6 @@ export class GL {
         program.bind();
         program.uniform1f("t", 0.5 * Math.cos(t) + 0.5);
         vao.bind();
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        gl.drawArrays(status.is_line ? gl.LINES : gl.TRIANGLES, 0, 6);
     }
 }

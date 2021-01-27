@@ -1,4 +1,5 @@
 import {GL} from "./GL.js"
+import {status} from "./Status.js";
 
 let canvas, text;
 
@@ -29,4 +30,12 @@ window.onresize = function () {
     canvas.height = height;
     const gl = canvas.getContext("webgl");
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+}
+
+
+
+document.querySelector("button").onclick = function () {
+    status.is_line = !status.is_line;
+    document.querySelector("button").innerHTML
+        = status.is_line ? "FILL" : "LINE";
 }
