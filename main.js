@@ -28,6 +28,10 @@ window.onresize = function () {
 
     canvas.width = width;
     canvas.height = height;
+
+    status.screen_size[0] = width;
+    status.screen_size[1] = height;
+
     const gl = canvas.getContext("webgl");
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
 };
@@ -38,6 +42,12 @@ window.onkeydown = function (e) {
 
 document.querySelector("#lineButton").onclick = function () {
     status.is_line = !status.is_line;
-    document.querySelector("button").innerHTML
+    document.querySelector("#lineButton").innerHTML
         = status.is_line ? "SOLID" : "WIRE";
+};
+
+document.querySelector("#stopButton").onclick = function () {
+    status.is_update = !status.is_update;
+    document.querySelector("#stopButton").innerHTML
+        = status.is_update ? "STOP" : "RESUME";
 };

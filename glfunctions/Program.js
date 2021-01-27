@@ -138,8 +138,14 @@ export class Program {
         this.gl.uniform4iv(this.gl.getUniformLocation(this.id, name), count, vec);
     }
 
-    uniformMat3(name, count, transpose, mat) {
+    uniformMat3(name, transpose, mat) {
         this.bind();
-        this.gl.uniformMatrix3fv(this.gl.getUniformLocation(this.id, name), count, transpose, mat.valueOf());
+        this.gl.uniformMatrix3fv(this.gl.getUniformLocation(this.id, name), transpose, mat.valueOf());
     }
+
+    uniformMat4(name, transpose, mat) {
+        this.bind();
+        this.gl.uniformMatrix4fv(this.gl.getUniformLocation(this.id, name), transpose, mat);
+    }
+
 }

@@ -1,8 +1,17 @@
+import {status} from "./Status.js";
+
 export class Sphere {
 
-    scale_mx;
-    rotate_mx;
-    trans_mx;
+    scale_mx = glMatrix.mat4.create();
+    rotate_mx = glMatrix.mat4.create();
+    trans_mx = glMatrix.mat4.create();
+
+    xyz_to_rhc = glMatrix.mat4.fromValues(
+        0, 1, 0, 0,
+        0, 0, 1, 0,
+        1, 0, 0, 0,
+        0, 0, 0, 1
+    );
 
     pos = [];
     norm = [];
@@ -10,7 +19,30 @@ export class Sphere {
 
     indices = [];
 
+    t = 0;
+
+    update(delta) {
+        if (!status.is_update) return;
+        this.rotate_mx =
+            glMatrix.mat4.rotate(
+                glMatrix.mat4.create(),
+                this.rotate_mx,
+                delta,
+                glMatrix.vec3.fromValues(0.0, 1.0, 0.0)
+            );
+    }
+
+    getSRT() {
+        let mat4 = glMatrix.mat4.create();
+        let res = glMatrix.mat4.multiply(mat4, this.scale_mx, this.xyz_to_rhc);
+        // let res = glMatrix.mat4.multiply(mat4, this.scale_mx, mat4);
+        res = glMatrix.mat4.multiply(mat4, this.rotate_mx, res);
+        return glMatrix.mat4.multiply(mat4, this.trans_mx, res);
+    }
+
     constructor() {
+        this.xyz_to_rhc = glMatrix.mat4.transpose(glMatrix.mat4.create(), this.xyz_to_rhc);
+
         const longitude_num = 72;
         const latitude_num = 36;
 
@@ -47,7 +79,7 @@ export class Sphere {
 
             for (let j = 0; j < longitude_num; j++, k1++, k2++) {
                 this.indices.push(k1);
-                this.indices.push(k2)
+                this.indices.push(k2);
                 this.indices.push(k1 + 1);
 
                 this.indices.push(k1 + 1);
