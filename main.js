@@ -83,8 +83,7 @@ let canvas, text;
 
 function glInit() {
     canvas = document.querySelector("#glCanvas");
-    text = document.querySelector("p");
-
+    text = document.querySelector("#glTitle");
 
     screen_size = glMatrix.vec2.fromValues(canvas.width, canvas.height);
     console.log("screen size: " + screen_size[0] + " * " + screen_size[1]);

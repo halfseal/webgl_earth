@@ -9,7 +9,7 @@
     <script src='./dist/gl-matrix.js'></script>
 </head>
 <body onload="start()">
-<p>WebGL</p>
+<p id="glTitle">WebGL</p>
 <canvas id="glCanvas">Your browser does not seem to support HTML5 canvas.</canvas>
 <script type="x-shader/x-vertex" id="h_vert">
     #version 100
@@ -35,7 +35,7 @@
 
     void main() {
 //        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0) * t;
-        gl_FragColor = vec4(tc, 0.0, 1.0) / t;
+        gl_FragColor = vec4(tc / 2.0 + t / 2.0, 0.0, 1.0);
     }
 </script>
 </body>
