@@ -34,8 +34,7 @@
     varying vec2 tc;
 
     void main() {
-//        gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0) * t;
-        gl_FragColor = vec4(tc / 2.0 + t / 2.0, 0.0, 1.0);
+        gl_FragColor = vec4(tc, t, 1.0);
     }
 </script>
 </body>
