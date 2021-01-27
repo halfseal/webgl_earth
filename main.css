@@ -4,8 +4,6 @@ body {
 
 canvas {
     display : block;
-    /*width : 1280px;*/
-    /*height : 720px;*/
     margin : auto;
     padding : 0;
     border : none;
@@ -14,7 +12,7 @@ canvas {
 
 button {
     display : block;
-    font-size : inherit;
+    font-size : 14px;
     margin : auto;
-    padding : 0.6em;
+    width : 100px;
 }

@@ -12,7 +12,7 @@ window.onload = function () {
 
     let gl = new GL(canvas);
     gl.onstart();
-}
+};
 
 window.onresize = function () {
     let width = (window.innerWidth) * 0.9;
@@ -30,12 +30,14 @@ window.onresize = function () {
     canvas.height = height;
     const gl = canvas.getContext("webgl");
     gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-}
+};
 
+window.onkeydown = function (e) {
 
+};
 
-document.querySelector("button").onclick = function () {
+document.querySelector("#lineButton").onclick = function () {
     status.is_line = !status.is_line;
     document.querySelector("button").innerHTML
-        = status.is_line ? "FILL" : "LINE";
-}
+        = status.is_line ? "SOLID" : "WIREFRAME";
+};
