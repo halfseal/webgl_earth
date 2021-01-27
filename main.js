@@ -39,5 +39,5 @@ window.onkeydown = function (e) {
 document.querySelector("#lineButton").onclick = function () {
     status.is_line = !status.is_line;
     document.querySelector("button").innerHTML
-        = status.is_line ? "SOLID" : "WIREFRAME";
+        = status.is_line ? "SOLID" : "WIRE";
 };
