@@ -16,15 +16,18 @@
     #version 100
     precision highp float;
     attribute vec3 position;
-//    attribute vec3 normal;
+    attribute vec3 normal;
     attribute vec2 texcoord;
 //    attribute vec3 tangent;
 
     varying vec2 tc;
+    varying vec3 pos;
 
     void main() {
         gl_Position = vec4(position, 1.0);
-        tc = texcoord;
+        tc = texcoord.xy;
+        normal;
+        pos = position;
     }
 </script>
 <script type="x-shader/x-fragment" id="h_frag">
@@ -33,6 +36,7 @@
     uniform float t;
 
     varying vec2 tc;
+    varying vec3 pos;
 
     void main() {
         gl_FragColor = vec4(tc, t, 1.0);
