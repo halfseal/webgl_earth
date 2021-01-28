@@ -83,8 +83,6 @@ function render() {
     program.bind();
     program.uniform1f("t", 0.5 * Math.cos(t) + 0.5);
 
-    program.uniformMat4("model_mx", false, sphere.getSRT());
-
     const aspect = status.screen_size[0] / status.screen_size[1];
     const aspect_matrix =
         glMatrix.mat4.fromValues(
@@ -96,16 +94,17 @@ function render() {
 
     program.uniformMat4("view_proj", false, aspect_matrix);
 
-    vao.bind();
-    gl.drawArrays(status.is_line ? gl.LINE_STRIP : gl.TRIANGLES, 0, sphere.indices.length);
-    vao.unbind();
-
-    program.uniformMat4("model_mx", false, glMatrix.mat4.create());
-    // program.uniformMat4("model_mx", false, sphere.getSRT());
-
+    // gl.disable(gl.DEPTH_TEST);
+    // program.uniformMat4("model_mx", false, glMatrix.mat4.create());
     // vao2.bind();
     // gl.drawArrays(status.is_line ? gl.LINES : gl.TRIANGLES, 0, 6);
     // vao2.unbind();
+    // gl.enable(gl.DEPTH_TEST);
+
+    program.uniformMat4("model_mx", false, sphere.getSRT());
+    vao.bind();
+    gl.drawArrays(status.is_line ? gl.LINE_STRIP : gl.TRIANGLES, 0, sphere.indices.length);
+    vao.unbind();
 
 }
 
