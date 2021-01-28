@@ -26,6 +26,7 @@ export class GL {
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.CULL_FACE);
+        gl.cullFace(gl.BACK);
     }
 
 
@@ -70,8 +71,6 @@ export class GL {
 
         window.requestAnimationFrame(loop);
     }
-
-
 }
 
 function update(delta) {
@@ -79,6 +78,8 @@ function update(delta) {
 }
 
 function render() {
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
     program.bind();
     program.uniform1f("t", 0.5 * Math.cos(t) + 0.5);
 
