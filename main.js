@@ -17,12 +17,12 @@ window.onresize = function () {
     let width = (window.innerWidth) * 0.9;
     let height = (window.innerHeight) * 0.9;
 
-    let needed_height = width * 9 / 16;
+    let needed_height = width * (1 / status.ratio);
 
     if (height > needed_height) {
         height = needed_height;
     } else {
-        width = height * 16 / 9;
+        width = height * status.ratio;
     }
 
     canvas.width = width;
