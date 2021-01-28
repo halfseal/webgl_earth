@@ -27,7 +27,6 @@ export class GL {
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.CULL_FACE);
         gl.cullFace(gl.BACK);
-        gl.enable(gl.CLIP_DISTANCE);
     }
 
 
