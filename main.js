@@ -1,7 +1,7 @@
 import {GL} from "./GL.js"
 import {status} from "./Status.js";
 
-let canvas, text;
+let canvas;
 
 window.onload = function () {
     canvas = document.querySelector("#glCanvas");
