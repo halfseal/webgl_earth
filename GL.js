@@ -1,6 +1,7 @@
 import {Program} from "./glfunctions/Program.js"
 import {Sphere} from "./Sphere.js";
-import {VAO} from "./glfunctions/VAO.js";
+import {VO} from "./glfunctions/VO.js";
+import {Texture} from "./glfunctions/Texture.js";
 import {status} from "./Status.js";
 
 let gl;
@@ -13,6 +14,7 @@ let t = 0.0;
 let t1 = 0.0, t0 = 0.0;
 
 let sphere;
+let softball_tex;
 
 export class GL {
     constructor(canvas) {
@@ -27,6 +29,7 @@ export class GL {
         gl.enable(gl.DEPTH_TEST);
         gl.enable(gl.CULL_FACE);
         gl.cullFace(gl.BACK);
+        gl.frontFace(gl.CCW);
     }
 
 
@@ -39,7 +42,7 @@ export class GL {
         );
 
         sphere = new Sphere();
-        vao = new VAO(gl, program.id, sphere.pos, sphere.norm, sphere.tc, sphere.indices);
+        vao = new VO(gl, program.id, sphere.pos, sphere.norm, sphere.tc, sphere.indices);
 
         let vertices =
             [
@@ -67,7 +70,9 @@ export class GL {
 
         let indices = [0, 1, 2, 0, 2, 3];
 
-        vao2 = new VAO(gl, program.id, vertices, normal, texcoord, indices);
+        vao2 = new VO(gl, program.id, vertices, normal, texcoord, indices);
+
+        softball_tex = new Texture(gl, "./source/image/earthmap1k.jpg", true);
 
         window.requestAnimationFrame(loop);
     }
@@ -82,6 +87,10 @@ function render() {
 
     program.bind();
     program.uniform1f("t", 0.5 * Math.cos(t) + 0.5);
+
+    gl.activeTexture(gl.TEXTURE0);
+    gl.bindTexture(gl.TEXTURE_2D, softball_tex.id);
+    program.uniform1i("tex_color", 0);
 
     const aspect = status.screen_size[0] / status.screen_size[1];
     const aspect_matrix =

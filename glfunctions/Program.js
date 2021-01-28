@@ -27,8 +27,9 @@ export class Program {
             gl.useProgram(null);
             if (this.id)
                 gl.deleteProgram(this.id);
-            document.querySelector("p").innerHTML =
-                "Shader program did not link successfully. " + "Error log: " + linkErrLog;
+            console.log(
+                "Shader program did not link successfully. " + "Error log: " + linkErrLog
+            );
 
             throw new Error("something went wrong");
         }

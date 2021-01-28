@@ -18,17 +18,19 @@
 <script type="x-shader/x-vertex" id="h_vert">
     #version 100
     precision highp float;
-    attribute vec3 position;
-    attribute vec3 normal;
-    attribute vec2 texcoord;
+
+    attribute vec3      position;
+    attribute vec3      normal;
+    attribute vec2      texcoord;
 //    attribute vec3 tangent;
 
-    uniform mat4 model_mx;
-    uniform mat4 view_proj;
+    uniform mat4        model_mx;
+    uniform mat4        view_proj;
 
-    varying vec2 tc;
-    varying vec3 pos;
-    varying vec3 norm;
+
+    varying vec2        tc;
+    varying vec3        pos;
+    varying vec3        norm;
 
     void main() {
         gl_Position = view_proj * model_mx * vec4(position, 1.0);
@@ -40,14 +42,18 @@
 <script type="x-shader/x-fragment" id="h_frag">
     #version 100
     precision mediump float;
-    uniform float t;
 
-    varying vec2 tc;
-    varying vec3 pos;
-    varying vec3 norm;
+    uniform float       t;
+
+    uniform sampler2D   tex_color;
+
+    varying vec2        tc;
+    varying vec3        pos;
+    varying vec3        norm;
 
     void main() {
-        gl_FragColor = vec4(tc, 0.0, 1.0);
+//        gl_FragColor = vec4(tc, 0.0, 1.0);
+        gl_FragColor = texture2D(tex_color, tc);
     }
 </script>
 </body>
