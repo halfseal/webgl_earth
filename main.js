@@ -1,10 +1,11 @@
 import {GL} from "./GL.js"
 import {status} from "./Status.js";
 
-let canvas;
+let canvas, text;
 
 window.onload = function () {
     canvas = document.querySelector("#glCanvas");
+    text = document.querySelector("#glTitle");
 
     window.onresize(undefined);
     console.log("screen size: " + canvas.width + " * " + canvas.height);
@@ -14,8 +15,8 @@ window.onload = function () {
 };
 
 window.onresize = function () {
-    let width = (window.innerWidth) * 0.95;
-    let height = (window.innerHeight) * 0.95;
+    let width = (window.innerWidth) * 0.9;
+    let height = (window.innerHeight - text.clientHeight) * 0.9;
 
     let needed_height = width * 9 / 16;
 
