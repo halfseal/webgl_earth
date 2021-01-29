@@ -22,6 +22,7 @@ export class GL {
     }
 
     init() {
+        alert("init!");
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         gl.lineWidth(1.0);
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
