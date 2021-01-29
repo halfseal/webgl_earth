@@ -18,8 +18,8 @@ export class Texture {
 
         let image = new Image();
         image.onload = function (e) {
-            console.log("Successfully loaded " + e.path[0].outerHTML);
-            alert("loaded!");
+            console.log("Successfully loaded " + image.src);
+
             gl.bindTexture(gl.TEXTURE_2D, id);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, need_flip);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
@@ -37,7 +37,7 @@ export class Texture {
         };
 
         image.onerror = function (e) {
-            alert("Failed loading" + e.path[0].outerHTML)
+            alert("Failed loading" + image.src)
         };
 
         image.src = path;

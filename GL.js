@@ -22,7 +22,6 @@ export class GL {
     }
 
     init() {
-        alert("init!");
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
         gl.lineWidth(1.0);
         gl.clearColor(0.0, 0.0, 0.0, 1.0);
@@ -73,7 +72,7 @@ export class GL {
 
         vao2 = new VO(gl, program.id, vertices, normal, texcoord, indices);
 
-        softball_tex = new Texture(gl, "./source/image/cubetexture.png", true);
+        softball_tex = new Texture(gl, "./source/image/earthmap1k.jpg", true);
 
         window.requestAnimationFrame(loop);
     }
