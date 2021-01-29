@@ -72,7 +72,7 @@ export class GL {
 
         vao2 = new VO(gl, program.id, vertices, normal, texcoord, indices);
 
-        softball_tex = new Texture(gl, "earthmap1k.jpg", true);
+        softball_tex = new Texture(gl, "./source/image/cubetexture.png", true);
 
         window.requestAnimationFrame(loop);
     }
