@@ -42,7 +42,7 @@ export class GL {
         );
 
         sphere = new Sphere();
-        vao = new VO(gl, program.id, sphere.pos, sphere.norm, sphere.tc, sphere.indices);
+        vao = new VO(gl, program, sphere.pos, sphere.norm, sphere.tc, sphere.indices);
 
         let vertices =
             [
@@ -70,9 +70,9 @@ export class GL {
 
         let indices = [0, 1, 2, 0, 2, 3];
 
-        vao2 = new VO(gl, program.id, vertices, normal, texcoord, indices);
+        vao2 = new VO(gl, program, vertices, normal, texcoord, indices);
 
-        softball_tex = new Texture(gl, "./source/image/earthmap1k.jpg", true);
+        softball_tex = new Texture(gl, "./source/image/cubetexture.png", true);
 
         window.requestAnimationFrame(loop);
     }
@@ -111,9 +111,9 @@ function render() {
     // gl.enable(gl.DEPTH_TEST);
 
     program.uniformMat4("model_mx", false, sphere.getSRT());
-    vao.bind();
+    vao.bind(program);
     gl.drawArrays(status.is_line ? gl.LINE_STRIP : gl.TRIANGLES, 0, sphere.indices.length);
-    vao.unbind();
+    vao.unbind(program);
 
 }
 

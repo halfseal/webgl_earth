@@ -70,6 +70,7 @@ export class Sphere {
                 this.pos.push([x, y, z]);
                 this.norm.push([nx, ny, nz]);
                 this.tc.push([tx, ty]);
+                console.log(tx + ", " + ty);
             }
         }
 

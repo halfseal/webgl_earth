@@ -2,7 +2,7 @@ export class VO {
     id = 0;
     gl;
 
-    constructor(gl, prog_id, vertices, normal, texcoord, indices) {
+    constructor(gl, prog, vertices, normal, texcoord, indices) {
         this.gl = gl;
 
         let data = [];
@@ -23,31 +23,40 @@ export class VO {
             data.push(tex[1]);
         }
 
+        prog.bind();
         this.id = gl.createBuffer();
         gl.bindBuffer(gl.ARRAY_BUFFER, this.id);
         gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(data), gl.STATIC_DRAW);
         gl.bindBuffer(gl.ARRAY_BUFFER, null);
     }
 
-    bind() {
+    bind(prog) {
         let gl = this.gl;
+
+        prog.bind();
         gl.bindBuffer(gl.ARRAY_BUFFER, this.id);
 
-        gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 8 * 4, 0);
-        gl.enableVertexAttribArray(0);
+        let pos = gl.getAttribLocation(prog.id, "position");
+        gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 8 * 4, 0);
+        gl.enableVertexAttribArray(pos);
 
-        gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 8 * 4, 3 * 4);
-        gl.enableVertexAttribArray(1);
+        pos = gl.getAttribLocation(prog.id, "normal");
+        gl.vertexAttribPointer(pos, 3, gl.FLOAT, false, 8 * 4, 3 * 4);
+        gl.enableVertexAttribArray(pos);
 
-        gl.vertexAttribPointer(2, 2, gl.FLOAT, false, 8 * 4, 6 * 4);
-        gl.enableVertexAttribArray(2);
+        pos = gl.getAttribLocation(prog.id, "texcoord");
+        gl.vertexAttribPointer(pos, 2, gl.FLOAT, false, 8 * 4, 6 * 4);
+        gl.enableVertexAttribArray(pos);
     }
 
-    unbind() {
+    unbind(prog) {
         let gl = this.gl;
         gl.bindBuffer(gl.ARRAY_BUFFER, this.id);
-        gl.disableVertexAttribArray(0);
-        gl.disableVertexAttribArray(1);
-        gl.disableVertexAttribArray(2);
+        let pos = gl.getAttribLocation(prog.id, "position");
+        gl.disableVertexAttribArray(pos);
+        pos = gl.getAttribLocation(prog.id, "normal");
+        gl.disableVertexAttribArray(pos);
+        pos = gl.getAttribLocation(prog.id, "texcoord");
+        gl.disableVertexAttribArray(pos);
     }
 }
