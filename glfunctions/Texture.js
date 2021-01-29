@@ -19,7 +19,7 @@ export class Texture {
         let image = new Image();
         image.onload = function (e) {
             console.log("Successfully loaded " + e.path[0].outerHTML);
-
+            alert("loaded!");
             gl.bindTexture(gl.TEXTURE_2D, id);
             gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, need_flip);
             gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
