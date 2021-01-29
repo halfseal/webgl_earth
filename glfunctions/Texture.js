@@ -39,6 +39,11 @@ export class Texture {
             gl.bindTexture(gl.TEXTURE_2D, null);
 
         };
+
+        image.onerror = function (e) {
+            alert("Failed loading" + e.path[0].outerHTML)
+        };
+
         image.src = path;
     }
 }
