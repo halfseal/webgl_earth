@@ -2,9 +2,11 @@ import {GL} from "./GL.js"
 import {status} from "./Status.js";
 
 let canvas;
+let container;
 
 window.onload = function () {
     canvas = document.querySelector("#glCanvas");
+    container = document.querySelector("#glContainer");
 
     window.onresize(undefined);
     console.log("screen size: " + canvas.width + " * " + canvas.height);
@@ -14,17 +16,11 @@ window.onload = function () {
 };
 
 window.onresize = function () {
-    let width = (canvas.clientWidth * window.devicePixelRatio);
-    let height = (canvas.clientHeight * window.devicePixelRatio);
+    let width = (container.clientWidth * window.devicePixelRatio);
+    let height = (container.clientHeight * window.devicePixelRatio);
 
-    // let needed_height = width * (1 / status.ratio);
-    //
-    // if (height > needed_height) {
-    //     height = needed_height;
-    // } else {
-    //     width = height * status.ratio;
-    // }
-
+    // container.width = width;
+    // container.height = height;
     canvas.width = width;
     canvas.height = height;
 

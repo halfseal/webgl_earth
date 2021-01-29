@@ -10,10 +10,12 @@
     <script src='./dist/gl-matrix.js'></script>
 </head>
 <body>
-<div class="canvas-container">
+<div id="glContainer">
     <canvas id="glCanvas">Your browser does not seem to support HTML5 canvas.</canvas>
-    <button id="lineButton" type="button">WIRE</button>
-    <button id="stopButton" type="button">STOP</button>
+    <div id="buttonSet">
+        <button id="lineButton" type="button">WIRE</button><br>
+        <button id="stopButton" type="button">STOP</button><br>
+    </div>
 </div>
 <script type="x-shader/x-vertex" id="h_vert">
     #version 100
