@@ -49,14 +49,11 @@ export class VO {
         gl.enableVertexAttribArray(pos);
     }
 
-    unbind(prog) {
+    unbind() {
         let gl = this.gl;
         gl.bindBuffer(gl.ARRAY_BUFFER, this.id);
-        let pos = gl.getAttribLocation(prog.id, "position");
-        gl.disableVertexAttribArray(pos);
-        pos = gl.getAttribLocation(prog.id, "normal");
-        gl.disableVertexAttribArray(pos);
-        pos = gl.getAttribLocation(prog.id, "texcoord");
-        gl.disableVertexAttribArray(pos);
+        gl.disableVertexAttribArray(0);
+        gl.disableVertexAttribArray(1);
+        gl.disableVertexAttribArray(2);
     }
 }

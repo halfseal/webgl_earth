@@ -113,7 +113,7 @@ function render() {
     program.uniformMat4("model_mx", false, sphere.getSRT());
     vao.bind(program);
     gl.drawArrays(status.is_line ? gl.LINE_STRIP : gl.TRIANGLES, 0, sphere.indices.length);
-    vao.unbind(program);
+    vao.unbind();
 
 }
 
