@@ -14,16 +14,16 @@ window.onload = function () {
 };
 
 window.onresize = function () {
-    let width = (window.innerWidth) * 0.95;
-    let height = (window.innerHeight) * 0.95;
+    let width = (canvas.clientWidth * window.devicePixelRatio);
+    let height = (canvas.clientHeight * window.devicePixelRatio);
 
-    let needed_height = width * (1 / status.ratio);
-
-    if (height > needed_height) {
-        height = needed_height;
-    } else {
-        width = height * status.ratio;
-    }
+    // let needed_height = width * (1 / status.ratio);
+    //
+    // if (height > needed_height) {
+    //     height = needed_height;
+    // } else {
+    //     width = height * status.ratio;
+    // }
 
     canvas.width = width;
     canvas.height = height;
@@ -32,7 +32,7 @@ window.onresize = function () {
     status.screen_size[1] = height;
 
     const gl = canvas.getContext("webgl");
-    gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+    gl.viewport(0, 0, width, height);
 };
 
 window.onkeydown = function (e) {

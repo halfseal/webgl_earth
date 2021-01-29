@@ -5,10 +5,6 @@ export class Texture {
     gl;
     id;
 
-    static isPowerOf2(value) {
-        return (value & (value - 1)) === 0;
-    }
-
     constructor(gl, path, need_flip = false) {
         this.gl = gl;
 

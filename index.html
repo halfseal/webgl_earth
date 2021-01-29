@@ -10,8 +10,8 @@
     <script src='./dist/gl-matrix.js'></script>
 </head>
 <body>
-<canvas id="glCanvas">Your browser does not seem to support HTML5 canvas.</canvas><br>
-<div>
+<div class="canvas-container">
+    <canvas id="glCanvas">Your browser does not seem to support HTML5 canvas.</canvas>
     <button id="lineButton" type="button">WIRE</button>
     <button id="stopButton" type="button">STOP</button>
 </div>
@@ -22,7 +22,7 @@
     attribute vec3      position;
     attribute vec3      normal;
     attribute vec2      texcoord;
-//    attribute vec3 tangent;
+    //    attribute vec3 tangent;
 
     uniform mat4        model_mx;
     uniform mat4        view_proj;
@@ -52,7 +52,7 @@
     varying vec3        norm;
 
     void main() {
-//        gl_FragColor = vec4(tc, 0.0, 1.0);
+        //        gl_FragColor = vec4(tc, 0.0, 1.0);
         gl_FragColor = texture2D(tex_color, tc);
     }
 </script>

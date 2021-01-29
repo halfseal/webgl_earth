@@ -1,17 +1,27 @@
 body {
-    text-align : center;
+    margin: 0;
+    padding: 0;
+}
+
+.canvas-container {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
 }
 
 canvas {
-    display : block;
-    margin : auto;
-    padding : 0;
-    border : none;
-    background-color : black;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    display: block;
+    overflow: hidden;
 }
 
 button {
-    font-size : 14px;
-    margin : auto;
-    width : 100px;
+    position: relative;
+    font-size: 14px;
+    /*margin: auto;*/
+    width: auto;
+    bottom: 0;
+
 }
