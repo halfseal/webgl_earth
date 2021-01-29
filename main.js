@@ -19,8 +19,6 @@ window.onresize = function () {
     let width = (container.clientWidth * window.devicePixelRatio);
     let height = (container.clientHeight * window.devicePixelRatio);
 
-    // container.width = width;
-    // container.height = height;
     canvas.width = width;
     canvas.height = height;
 
