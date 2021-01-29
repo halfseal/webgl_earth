@@ -14,8 +14,8 @@ window.onload = function () {
 };
 
 window.onresize = function () {
-    let width = (canvas.clientWidth * window.devicePixelRatio);
-    let height = (canvas.clientHeight * window.devicePixelRatio);
+    let width = window.innerWidth;
+    let height = window.innerHeight;
 
     // let needed_height = width * (1 / status.ratio);
     //
