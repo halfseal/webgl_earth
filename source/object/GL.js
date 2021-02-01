@@ -1,9 +1,9 @@
-import {Program} from "./glfunctions/Program.js"
+import {Program} from "../glfunctions/Program.js"
 import {Sphere} from "./Sphere.js";
-import {VO} from "./glfunctions/VO.js";
-import {Texture} from "./glfunctions/Texture.js";
+import {VO} from "../glfunctions/VO.js";
+import {Texture} from "../glfunctions/Texture.js";
 import {status} from "./Status.js";
-import {cam, key} from "./glfunctions/Camera.js";
+import {cam, key} from "../glfunctions/Camera.js";
 
 let gl;
 

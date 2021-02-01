@@ -1,6 +1,6 @@
-import {GL} from "./GL.js"
-import {status} from "./Status.js";
-import {cam, mouse, key} from "./glfunctions/Camera.js";
+import {GL} from "./source/object/GL.js"
+import {status} from "./source/object/Status.js";
+import {cam, mouse, key} from "./source/glfunctions/Camera.js";
 
 let canvas;
 let container;
@@ -47,43 +47,17 @@ document.querySelector("#stopButton").onclick = function () {
         console.log("on touch!");
 
         window.ontouchstart = function (ev) {
-            switch (ev.touches.length) {
-                case 1 : {
-                    mouse.start();
-                    break;
-                }
-                case 2 : {
-                    console.log("12");
-                    break;
-                }
-            }
+            mouse.start();
         };
 
+        var agent = navigator.userAgent.toLowerCase();
+        alert(agent);
         window.ontouchmove = function (ev) {
-            switch (ev.touches.length) {
-                case 1 : {
-                    mouse.move(ev.touches[0].clientX, ev.touches[0].clientY, cam);
-                    break;
-                }
-                case 2 : {
-                    console.log("12")
-                    break;
-                }
-            }
+            mouse.move(ev.touches[0].clientX, ev.touches[0].clientY, cam);
         };
 
-        window.ontouchend = function () {
-            switch (ev.touches.length) {
-                case 1 : {
-                    mouse.end();
-                    break;
-                }
-                case 2 : {
-                    console.log("12")
-                    break;
-                }
-            }
-
+        window.ontouchend = function (ev) {
+            mouse.end();
             key.reset();
         };
 
@@ -115,6 +89,8 @@ document.querySelector("#stopButton").onclick = function () {
             mouse.start();
         };
 
+        var agent = navigator.userAgent.toLowerCase();
+        alert(agent);
         window.onmousemove = function (ev) {
             mouse.move(ev.clientX, ev.clientY, cam);
         };
