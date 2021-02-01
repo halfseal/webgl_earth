@@ -104,7 +104,7 @@ function render() {
     cam.aspect = aspect;
 
     program.uniformMat4("view_mx", false, cam.get_view());
-    program.uniformMat4("proj_mx", false, aspect_matrix);
+    program.uniformMat4("proj_mx", false, cam.get_proj());
 
     // gl.disable(gl.DEPTH_TEST);
     // program.uniformMat4("model_mx", false, glMatrix.mat4.create());

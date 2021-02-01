@@ -1,5 +1,6 @@
 import {GL} from "./GL.js"
 import {status} from "./Status.js";
+import {cam} from "./glfunctions/Camera.js";
 
 let canvas;
 let container;
@@ -45,10 +46,76 @@ document.querySelector("#stopButton").onclick = function () {
         = status.is_update ? "STOP" : "RESUME";
 };
 
-window.ontouchstart = function (ev) {
-    alert(ev);
-};
+let isClicked = false;
+let firstMouse = true;
+let lastX = 0.0;
+let lastY = 0.0;
 
-window.onmousedown = function (ev) {
-    alert(ev);
-};
+function start() {
+    isClicked = true;
+    firstMouse = true;
+}
+
+function move(x, y) {
+    if (!isClicked) return;
+
+    if (firstMouse) {
+        lastX = x;
+        lastY = y;
+        firstMouse = false;
+    }
+
+    let xOffset = x - lastX;
+    let yOffset = lastY - y;
+    lastX = x;
+    lastY = y;
+
+    let sensitivity = 0.1;
+    xOffset *= sensitivity;
+    yOffset *= sensitivity;
+
+    cam.yaw += xOffset;
+    cam.pitch += yOffset;
+
+    if (cam.pitch > 89.0) cam.pitch = 89.0;
+    if (cam.pitch < -89.0) cam.pitch = -89.0;
+}
+
+function end() {
+    isClicked = false;
+}
+
+(() => {
+    if ("ontouchstart" in document.documentElement) {
+        console.log("on touch!");
+
+        window.ontouchstart = function () {
+            start();
+        };
+
+        window.ontouchmove = function (ev) {
+            move(ev.touches[0].clientX, ev.touches[0].clientY);
+        };
+
+        window.ontouchend = function () {
+            end();
+        };
+    } else {
+        console.log("on mouse!");
+
+        window.onmousedown = function () {
+            start();
+        };
+
+        window.onmousemove = function (ev) {
+            move(ev.clientX, ev.clientY);
+        };
+
+        window.onmouseup = function () {
+            end();
+        };
+    }
+})();
+
+
+

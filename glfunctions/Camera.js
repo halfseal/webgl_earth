@@ -8,7 +8,7 @@ class Camera {
     eye = glMatrix.vec3.fromValues(0.0, 0.0, 10.0);
     up = glMatrix.vec3.fromValues(0.0, 1.0, 0.0);
 
-    yaw = 90.0;
+    yaw = -90.0;
     pitch = 0.0;
 
     aspect = 1.0;
@@ -26,8 +26,10 @@ class Camera {
     get_front() {
         let x = Math.cos(toRad(this.yaw)) * Math.cos(toRad(this.pitch));
         let y = Math.sin(toRad(this.pitch));
-        let z = Math.cos(toRad(this.yaw)) * Math.cos(toRad(this.pitch));
-        return glMatrix.vec3.fromValues(x, y, z);
+        let z = Math.sin(toRad(this.yaw)) * Math.cos(toRad(this.pitch));
+        let xyz = glMatrix.vec3.fromValues(x, y, z);
+        xyz = glMatrix.vec3.normalize(glMatrix.vec3.create(), xyz);
+        return xyz;
     }
 
     get_view() {
