@@ -36,8 +36,8 @@ export class Texture {
             gl.bindTexture(gl.TEXTURE_2D, null);
         };
 
-        image.onerror = function (e) {
-            alert("Failed loading" + image.src)
+        image.onerror = function () {
+            alert("Failed loading " + image.src)
         };
 
         image.src = path;

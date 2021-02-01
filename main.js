@@ -30,30 +30,60 @@ window.onresize = function () {
     gl.viewport(0, 0, width, height);
 };
 
-window.onkeydown = function (ev) {
-    key.usingKeyboard = true;
-    key.changeStatus(ev.key, true);
+document.querySelector("#lineButton").onclick = function () {
+    status.is_line = !status.is_line;
+    document.querySelector("#lineButton").innerHTML
+        = status.is_line ? "SOLID" : "WIRE";
 };
 
-window.onkeyup = function (ev) {
-    key.usingKeyboard = false;
-    key.changeStatus(ev.key, false);
+document.querySelector("#stopButton").onclick = function () {
+    status.is_update = !status.is_update;
+    document.querySelector("#stopButton").innerHTML
+        = status.is_update ? "STOP" : "RESUME";
 };
 
-((mouse) => {
+(() => {
     if ("ontouchstart" in document.documentElement) {
         console.log("on touch!");
 
-        window.ontouchstart = function () {
-            mouse.start();
+        window.ontouchstart = function (ev) {
+            switch (ev.touches.length) {
+                case 1 : {
+                    mouse.start();
+                    break;
+                }
+                case 2 : {
+                    console.log("12");
+                    break;
+                }
+            }
         };
 
         window.ontouchmove = function (ev) {
-            mouse.move(ev.touches[0].clientX, ev.touches[0].clientY, cam);
+            switch (ev.touches.length) {
+                case 1 : {
+                    mouse.move(ev.touches[0].clientX, ev.touches[0].clientY, cam);
+                    break;
+                }
+                case 2 : {
+                    console.log("12")
+                    break;
+                }
+            }
         };
 
         window.ontouchend = function () {
-            mouse.end();
+            switch (ev.touches.length) {
+                case 1 : {
+                    mouse.end();
+                    break;
+                }
+                case 2 : {
+                    console.log("12")
+                    break;
+                }
+            }
+
             key.reset();
         };
 
@@ -75,6 +105,8 @@ window.onkeyup = function (ev) {
         document.querySelector("#upButton").ontouchstart = function () {
             key.changeStatus("ArrowUp", true);
         };
+
+        window.on
 
     } else {
         console.log("on mouse!");
@@ -110,20 +142,28 @@ window.onkeyup = function (ev) {
         document.querySelector("#upButton").onmousedown = function () {
             key.changeStatus("ArrowUp", true);
         };
+
+        window.onkeydown = function (ev) {
+            key.usingKeyboard = true;
+            key.changeStatus(ev.key, true);
+        };
+
+        window.onkeyup = function (ev) {
+            key.usingKeyboard = false;
+            key.changeStatus(ev.key, false);
+        };
+
+        window.onwheel = function (ev) {
+            let dy = ev.deltaY;
+            dy = 5 * dy / Math.abs(dy);
+
+            cam.fov += dy;
+            if (cam.fov < 15) cam.fov = 15;
+            if (cam.fov > 45) cam.fov = 45;
+        };
     }
-})(mouse);
+})();
 
-document.querySelector("#lineButton").onclick = function () {
-    status.is_line = !status.is_line;
-    document.querySelector("#lineButton").innerHTML
-        = status.is_line ? "SOLID" : "WIRE";
-};
-
-document.querySelector("#stopButton").onclick = function () {
-    status.is_update = !status.is_update;
-    document.querySelector("#stopButton").innerHTML
-        = status.is_update ? "STOP" : "RESUME";
-};
 
 
 
