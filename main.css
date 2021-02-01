@@ -1,7 +1,7 @@
-.disable-select{
+.disable-select {
     user-select: none; /* supported by Chrome and Opera */
     -webkit-user-select: none; /* Safari */
-    -webkit-touch-callout:none;
+    -webkit-touch-callout: none;
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */
 }
@@ -25,6 +25,19 @@ canvas {
     /*overflow: hidden;*/
 }
 
+button {
+    background-color: transparent;
+    color: white;
+    text-shadow: -2px 0 #000, 0 2px #000, 2px 0 #000, 0 -2px #000;
+}
+
+#hideButton {
+    position: fixed;
+    left: 0;
+    top: 100%;
+    transform: translateY(-100%);
+}
+
 #buttonSet {
     position: fixed;
     left: 0;
@@ -37,11 +50,4 @@ canvas {
     left: 50%;
     top: 100%;
     transform: translate(-50%, -150%);
-}
-
-button {
-    position: relative;
-    font-size: 14px;
-    /*margin: auto;*/
-    width: auto;
 }

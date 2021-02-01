@@ -30,6 +30,21 @@ window.onresize = function () {
     gl.viewport(0, 0, width, height);
 };
 
+document.querySelector("#hideButton").onclick = function () {
+    status.is_show_button = !status.is_show_button;
+
+    let set1 = document.querySelector("#buttonSet");
+    let set2 = document.querySelector("#arrowSet");
+
+    if (!status.is_show_button) {
+        set1.style.visibility = "hidden";
+        set2.style.visibility = "hidden";
+    } else {
+        set1.style.visibility = "visible";
+        set2.style.visibility = "visible";
+    }
+}
+
 document.querySelector("#lineButton").onclick = function () {
     status.is_line = !status.is_line;
     document.querySelector("#lineButton").innerHTML
@@ -89,7 +104,7 @@ document.querySelector("#stopButton").onclick = function () {
             mouse.start();
         };
 
-        var agent = navigator.userAgent.toLowerCase();
+        var agent = window.navigator.userAgent.toLowerCase();
         alert(agent);
         window.onmousemove = function (ev) {
             mouse.move(ev.clientX, ev.clientY, cam);
