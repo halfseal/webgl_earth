@@ -1,5 +1,9 @@
-* {
-    user-select: none;
+.disable-select{
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -webkit-touch-callout:none;
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
 }
 
 
