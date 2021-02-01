@@ -46,7 +46,7 @@ document.querySelector("#stopButton").onclick = function () {
 };
 
 window.ontouchstart = function (ev) {
-    console.log(ev);
+    alert(ev);
 };
 
 window.onmousedown = function (ev) {
