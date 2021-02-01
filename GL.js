@@ -3,6 +3,7 @@ import {Sphere} from "./Sphere.js";
 import {VO} from "./glfunctions/VO.js";
 import {Texture} from "./glfunctions/Texture.js";
 import {status} from "./Status.js";
+import {cam} from "./glfunctions/Camera.js";
 
 let gl;
 
@@ -100,8 +101,10 @@ function render() {
             0, 0, 1, 0,
             0, 0, 0, 1
         )
+    cam.aspect = aspect;
 
-    program.uniformMat4("view_proj", false, aspect_matrix);
+    program.uniformMat4("view_mx", false, cam.get_view());
+    program.uniformMat4("proj_mx", false, aspect_matrix);
 
     // gl.disable(gl.DEPTH_TEST);
     // program.uniformMat4("model_mx", false, glMatrix.mat4.create());

@@ -29,8 +29,8 @@ window.onresize = function () {
     gl.viewport(0, 0, width, height);
 };
 
-window.onkeydown = function (e) {
-    console.log(e);
+window.onkeydown = function (ev) {
+    console.log(ev);
 };
 
 document.querySelector("#lineButton").onclick = function () {
@@ -43,4 +43,12 @@ document.querySelector("#stopButton").onclick = function () {
     status.is_update = !status.is_update;
     document.querySelector("#stopButton").innerHTML
         = status.is_update ? "STOP" : "RESUME";
+};
+
+window.ontouchstart = function (ev) {
+    console.log(ev);
+};
+
+window.onmousedown = function (ev) {
+    alert(ev);
 };

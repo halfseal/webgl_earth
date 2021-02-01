@@ -27,15 +27,15 @@
     //    attribute vec3 tangent;
 
     uniform mat4        model_mx;
-    uniform mat4        view_proj;
-
+    uniform mat4        view_mx;
+    uniform mat4        proj_mx;
 
     varying vec2        tc;
     varying vec3        pos;
     varying vec3        norm;
 
     void main() {
-        gl_Position = view_proj * model_mx * vec4(position, 1.0);
+        gl_Position = proj_mx * view_mx * model_mx * vec4(position, 1.0);
         tc = texcoord;
         norm = normal;
         pos = position;
