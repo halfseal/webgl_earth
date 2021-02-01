@@ -1,6 +1,6 @@
 import {GL} from "./GL.js"
 import {status} from "./Status.js";
-import {cam} from "./glfunctions/Camera.js";
+import {cam, mouse, key} from "./glfunctions/Camera.js";
 
 let canvas;
 let container;
@@ -31,8 +31,87 @@ window.onresize = function () {
 };
 
 window.onkeydown = function (ev) {
-    console.log(ev);
+    key.usingKeyboard = true;
+    key.changeStatus(ev.key, true);
 };
+
+window.onkeyup = function (ev) {
+    key.usingKeyboard = false;
+    key.changeStatus(ev.key, false);
+};
+
+((mouse) => {
+    if ("ontouchstart" in document.documentElement) {
+        console.log("on touch!");
+
+        window.ontouchstart = function () {
+            mouse.start();
+        };
+
+        window.ontouchmove = function (ev) {
+            mouse.move(ev.touches[0].clientX, ev.touches[0].clientY, cam);
+        };
+
+        window.ontouchend = function () {
+            mouse.end();
+            key.reset();
+        };
+
+        document.querySelector("#wButton").ontouchstart = function () {
+            key.changeStatus("w", true);
+        };
+        document.querySelector("#aButton").ontouchstart = function () {
+            key.changeStatus("a", true);
+        };
+        document.querySelector("#sButton").ontouchstart = function () {
+            key.changeStatus("s", true);
+        };
+        document.querySelector("#dButton").ontouchstart = function () {
+            key.changeStatus("d", true);
+        };
+        document.querySelector("#downButton").ontouchstart = function () {
+            key.changeStatus("ArrowDown", true);
+        };
+        document.querySelector("#upButton").ontouchstart = function () {
+            key.changeStatus("ArrowUp", true);
+        };
+
+    } else {
+        console.log("on mouse!");
+
+        window.onmousedown = function () {
+            mouse.start();
+        };
+
+        window.onmousemove = function (ev) {
+            mouse.move(ev.clientX, ev.clientY, cam);
+        };
+
+        window.onmouseup = function () {
+            mouse.end();
+            if (!key.usingKeyboard) key.reset();
+        };
+
+        document.querySelector("#wButton").onmousedown = function () {
+            key.changeStatus("w", true);
+        };
+        document.querySelector("#aButton").onmousedown = function () {
+            key.changeStatus("a", true);
+        };
+        document.querySelector("#sButton").onmousedown = function () {
+            key.changeStatus("s", true);
+        };
+        document.querySelector("#dButton").onmousedown = function () {
+            key.changeStatus("d", true);
+        };
+        document.querySelector("#downButton").onmousedown = function () {
+            key.changeStatus("ArrowDown", true);
+        };
+        document.querySelector("#upButton").onmousedown = function () {
+            key.changeStatus("ArrowUp", true);
+        };
+    }
+})(mouse);
 
 document.querySelector("#lineButton").onclick = function () {
     status.is_line = !status.is_line;
@@ -46,76 +125,6 @@ document.querySelector("#stopButton").onclick = function () {
         = status.is_update ? "STOP" : "RESUME";
 };
 
-let isClicked = false;
-let firstMouse = true;
-let lastX = 0.0;
-let lastY = 0.0;
-
-function start() {
-    isClicked = true;
-    firstMouse = true;
-}
-
-function move(x, y) {
-    if (!isClicked) return;
-
-    if (firstMouse) {
-        lastX = x;
-        lastY = y;
-        firstMouse = false;
-    }
-
-    let xOffset = x - lastX;
-    let yOffset = lastY - y;
-    lastX = x;
-    lastY = y;
-
-    let sensitivity = 0.1;
-    xOffset *= sensitivity;
-    yOffset *= sensitivity;
-
-    cam.yaw += xOffset;
-    cam.pitch += yOffset;
-
-    if (cam.pitch > 89.0) cam.pitch = 89.0;
-    if (cam.pitch < -89.0) cam.pitch = -89.0;
-}
-
-function end() {
-    isClicked = false;
-}
-
-(() => {
-    if ("ontouchstart" in document.documentElement) {
-        console.log("on touch!");
-
-        window.ontouchstart = function () {
-            start();
-        };
-
-        window.ontouchmove = function (ev) {
-            move(ev.touches[0].clientX, ev.touches[0].clientY);
-        };
-
-        window.ontouchend = function () {
-            end();
-        };
-    } else {
-        console.log("on mouse!");
-
-        window.onmousedown = function () {
-            start();
-        };
-
-        window.onmousemove = function (ev) {
-            move(ev.clientX, ev.clientY);
-        };
-
-        window.onmouseup = function () {
-            end();
-        };
-    }
-})();
 
 
 

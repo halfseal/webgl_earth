@@ -23,6 +23,14 @@ canvas {
     top: 0;
 }
 
+#arrowSet {
+    text-align: center;
+    position: fixed;
+    left: 50%;
+    top: 100%;
+    transform: translate(-50%, -150%);
+}
+
 button {
     position: relative;
     font-size: 14px;
