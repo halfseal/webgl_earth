@@ -1,4 +1,4 @@
-import {GL} from "./source/object/GL.js"
+import {glStart} from "./source/object/GL.js"
 import {status} from "./source/object/Status.js";
 import {cam, mouse, key} from "./source/glfunctions/Camera.js";
 
@@ -12,8 +12,7 @@ window.onload = function () {
     window.onresize(undefined);
     console.log("screen size: " + canvas.width + " * " + canvas.height);
 
-    let gl = new GL(canvas);
-    gl.onstart();
+    glStart(canvas);
 };
 
 window.onresize = function () {
@@ -65,8 +64,6 @@ document.querySelector("#stopButton").onclick = function () {
             mouse.start();
         };
 
-        var agent = navigator.userAgent.toLowerCase();
-        alert(agent);
         window.ontouchmove = function (ev) {
             mouse.move(ev.touches[0].clientX, ev.touches[0].clientY, cam);
         };
@@ -104,8 +101,6 @@ document.querySelector("#stopButton").onclick = function () {
             mouse.start();
         };
 
-        var agent = window.navigator.userAgent.toLowerCase();
-        alert(agent);
         window.onmousemove = function (ev) {
             mouse.move(ev.clientX, ev.clientY, cam);
         };

@@ -1,6 +1,10 @@
 import {status} from "./Status.js";
+import {VO} from "../glfunctions/VO.js";
+import {Texture} from "../glfunctions/Texture.js";
 
 export class Sphere {
+    tex;
+    vo;
 
     scale_mx = glMatrix.mat4.create();
     rotate_mx = glMatrix.mat4.create();
@@ -16,7 +20,6 @@ export class Sphere {
     pos = [];
     norm = [];
     tc = [];
-
     indices = [];
 
     t = 0;
@@ -35,12 +38,12 @@ export class Sphere {
     getSRT() {
         let mat4 = glMatrix.mat4.create();
         let res = glMatrix.mat4.multiply(mat4, this.scale_mx, this.xyz_to_rhc);
-        // let res = glMatrix.mat4.multiply(mat4, this.scale_mx, mat4);
         res = glMatrix.mat4.multiply(mat4, this.rotate_mx, res);
         return glMatrix.mat4.multiply(mat4, this.trans_mx, res);
     }
 
-    constructor() {
+    constructor(gl, program, path, need_flip) {
+        this.tex = new Texture(gl, path, need_flip);
         this.xyz_to_rhc = glMatrix.mat4.transpose(glMatrix.mat4.create(), this.xyz_to_rhc);
 
         const longitude_num = 72;
@@ -87,5 +90,7 @@ export class Sphere {
                 this.indices.push(k2 + 1);
             }
         }
+
+        this.vo = new VO(gl, program, this.pos, this.norm, this.tc, this.indices);
     }
 }

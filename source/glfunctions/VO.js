@@ -57,3 +57,35 @@ export class VO {
         gl.disableVertexAttribArray(2);
     }
 }
+
+/**
+ example :
+
+    let vertices =
+        [
+            [1.0, 1.0, 0.0],
+            [-1.0, 1.0, 0.0],
+            [-1.0, -1.0, 0.0],
+            [1.0, -1.0, 0.0],
+        ];
+
+    let normal =
+        [
+            [0.0, 0.0, 1.0],
+            [0.0, 0.0, 1.0],
+            [0.0, 0.0, 1.0],
+            [0.0, 0.0, 1.0],
+        ];
+
+    let texcoord =
+        [
+            [1.0, 1.0],
+            [0.0, 1.0],
+            [0.0, 0.0],
+            [1.0, 0.0]
+        ];
+
+    let indices = [0, 1, 2, 0, 2, 3];
+
+    vao = new VO(gl, program, vertices, normal, texcoord, indices);
+ */
