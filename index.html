@@ -70,5 +70,45 @@
         gl_FragColor = texture2D(tex_color, tc);
     }
 </script>
+<script type="x-shader/x-vertex" id="skybox_vert">
+    #version 100
+    precision highp float;
+
+    attribute vec3      position;
+    attribute vec3      normal;
+    attribute vec2      texcoord;
+    //    attribute vec3 tangent;
+
+    uniform mat4        model_mx;
+    uniform mat4        view_mx;
+    uniform mat4        proj_mx;
+
+    varying vec3        tc;
+
+    varying vec2        tex;
+    varying vec3        norm;
+
+    void main() {
+        tc = position;
+        vec4 pos = proj_mx * mat4(mat3(view_mx)) * model_mx * vec4(position, 1.0);
+        gl_Position = pos.xyww;
+
+        tex = texcoord;
+        norm = normal;
+    }
+</script>
+
+<script type="x-shader/x-fragment" id="skybox_frag">
+    #version 100
+    precision mediump float;
+
+    uniform samplerCube skybox;
+
+    varying vec3        tc;
+
+    void main() {
+        gl_FragColor = textureCube(skybox, tc);
+    }
+</script>
 </body>
 </html>

@@ -17,7 +17,7 @@ export class Texture {
         gl.bindTexture(gl.TEXTURE_2D, null);
 
         let image = new Image();
-        image.onload = function (e) {
+        image.onload = e => {
             console.log("Successfully loaded " + image.src);
 
             gl.bindTexture(gl.TEXTURE_2D, id);

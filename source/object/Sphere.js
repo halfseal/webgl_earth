@@ -1,5 +1,5 @@
 import {status} from "./Status.js";
-import {VO} from "../glfunctions/VO.js";
+import {VO, Vertex} from "../glfunctions/VO.js";
 import {Texture} from "../glfunctions/Texture.js";
 
 export class Sphere {
@@ -17,9 +17,7 @@ export class Sphere {
         0, 0, 0, 1
     );
 
-    pos = [];
-    norm = [];
-    tc = [];
+    vert = new Vertex();
     indices = [];
 
     t = 0;
@@ -42,7 +40,7 @@ export class Sphere {
         return glMatrix.mat4.multiply(mat4, this.trans_mx, res);
     }
 
-    constructor(gl, program, path, need_flip) {
+    constructor(gl, prog, path, need_flip) {
         this.tex = new Texture(gl, path, need_flip);
         this.xyz_to_rhc = glMatrix.mat4.transpose(glMatrix.mat4.create(), this.xyz_to_rhc);
 
@@ -70,9 +68,9 @@ export class Sphere {
                 const tx = long_degree / (2 * Math.PI);
                 const ty = 1.0 - (lat_degree / Math.PI);
 
-                this.pos.push([x, y, z]);
-                this.norm.push([nx, ny, nz]);
-                this.tc.push([tx, ty]);
+                this.vert.pos.push([x, y, z]);
+                this.vert.norm.push([nx, ny, nz]);
+                this.vert.tc.push([tx, ty]);
             }
         }
 
@@ -91,6 +89,6 @@ export class Sphere {
             }
         }
 
-        this.vo = new VO(gl, program, this.pos, this.norm, this.tc, this.indices);
+        this.vo = new VO(gl, prog, this.vert.pos, this.vert.norm, this.vert.tc, this.indices);
     }
 }

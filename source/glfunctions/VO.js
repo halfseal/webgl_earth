@@ -1,3 +1,9 @@
+export class Vertex{
+    pos = [];
+    norm = [];
+    tc = [];
+}
+
 export class VO {
     id = 0;
     gl;
