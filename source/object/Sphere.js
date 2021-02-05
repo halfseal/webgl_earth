@@ -6,6 +6,7 @@ const {mat4, mat3, vec3, vec2} = glMatrix;
 
 export class Sphere {
     tex;
+    texNRM;
     vo;
 
     scale_mx = mat4.create();

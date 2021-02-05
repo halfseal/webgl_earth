@@ -8,10 +8,16 @@ export class Program {
         const vertexShader = gl.createShader(gl.VERTEX_SHADER);
         gl.shaderSource(vertexShader, vs);
         gl.compileShader(vertexShader);
+        if (!gl.getShaderParameter(vertexShader, gl.COMPILE_STATUS)) {
+            console.log(gl.getShaderInfoLog(vertexShader));
+        }
 
         const fragmentShader = gl.createShader(gl.FRAGMENT_SHADER);
         gl.shaderSource(fragmentShader, fs);
         gl.compileShader(fragmentShader);
+        if (!gl.getShaderParameter(fragmentShader, gl.COMPILE_STATUS)) {
+            console.log(gl.getShaderInfoLog(fragmentShader));
+        }
 
         this.id = gl.createProgram();
         gl.attachShader(this.id, vertexShader);
@@ -37,6 +43,10 @@ export class Program {
 
     bind() {
         this.gl.useProgram(this.id);
+    }
+
+    unbind() {
+        this.gl.useProgram(null);
     }
 
     uniform1f(name, f0) {
@@ -114,9 +124,9 @@ export class Program {
         this.gl.uniform3fv(this.gl.getUniformLocation(this.id, name), count, vec);
     }
 
-    uniform4fv(name, count, vec) {
+    uniform4fv(name, vec) {
         this.bind();
-        this.gl.uniform4fv(this.gl.getUniformLocation(this.id, name), count, vec);
+        this.gl.uniform4fv(this.gl.getUniformLocation(this.id, name), vec);
     }
 
     uniform1iv(name, count, vec) {

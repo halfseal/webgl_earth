@@ -1,11 +1,10 @@
 import {Program} from "../glfunctions/Program.js"
 import {Sphere} from "./Sphere.js";
-import {VO} from "../glfunctions/VO.js";
-import {Texture} from "../glfunctions/Texture.js";
 import {status} from "./Status.js";
 import {cam, key} from "../glfunctions/Camera.js";
 import {Skybox} from "./Skybox.js";
 import {OBJ} from "../../OBJ.js";
+import {Light} from "./Light.js";
 
 let gl;
 let prog;
@@ -14,6 +13,7 @@ let sphere;
 let skybox;
 
 let mountain = new OBJ();
+let light = new Light();
 
 export function glStart(canvas) {
     gl = canvas.getContext("webgl");
@@ -34,16 +34,21 @@ function render() {
 
     cam.aspect = status.screen_size[0] / status.screen_size[1];
 
+    let view_mx = cam.get_view();
+    let proj_mx = cam.get_proj();
+
     let skyProg = skybox.prog;
     skyProg.bind();
-    skyProg.uniformMat4("cam.view_mx", false, cam.get_view());
-    skyProg.uniformMat4("cam.proj_mx", false, cam.get_proj());
+    skyProg.uniformMat4("cam.view_mx", false, view_mx);
+    skyProg.uniformMat4("cam.proj_mx", false, proj_mx);
     skybox.draw();
+
+    light.draw(prog, view_mx);
 
     prog.bind();
     prog.uniform1f("t", 0.5 * Math.cos(t) + 0.5);
-    prog.uniformMat4("cam.view_mx", false, cam.get_view());
-    prog.uniformMat4("cam.proj_mx", false, cam.get_proj());
+    prog.uniformMat4("cam.view_mx", false, view_mx);
+    prog.uniformMat4("cam.proj_mx", false, proj_mx);
 
     sphere.draw();
 }
@@ -77,6 +82,8 @@ function initDrawFunc() {
         gl.activeTexture(gl.TEXTURE0);
         gl.bindTexture(gl.TEXTURE_2D, sphere.tex.id);
         prog.uniform1i("tex_color", 0);
+
+        prog.uniform1i("render_mode", 0);
 
         prog.uniformMat4("model_mx", false, sphere.getSRT());
         sphere.vo.bind(prog);

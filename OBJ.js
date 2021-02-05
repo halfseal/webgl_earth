@@ -24,7 +24,7 @@ export class OBJ {
     }
 
     handleObj() {
-        console.log(this.lines.length);
+        // console.log(this.lines.length);
         for (let i = 0; i < 10; i++) {
             let line = this.lines[i];
             let items = line.replace(/\s\s+/g, ' ').trim().split(' ');
@@ -49,7 +49,7 @@ export class OBJ {
                     break;
 
                 case "mtllib" :
-                    console.table(items);
+                    // console.table(items);
                     break;
 
 

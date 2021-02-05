@@ -43,21 +43,23 @@
     uniform mat4        model_mx;
     uniform struct Camera { mat4 view_mx, proj_mx; } cam;
 
+    varying vec4        epos;
     varying vec2        tc;
-    varying vec3        pos;
-    varying vec3        tan;
     varying vec3        norm;
+    varying vec3        tan;
 
     void main() {
-        gl_Position = cam.proj_mx * cam.view_mx * model_mx * vec4(position, 1.0);
+        vec4 wpos = model_mx * vec4(position, 1.0);
+        epos = cam.view_mx * wpos;
+        gl_Position = cam.proj_mx * epos;
         tc = texcoord;
-        norm = normal;
+        norm = normalize(mat3(cam.view_mx * model_mx) * normal);
         tan = tangent;
-        pos = position;
     }
 </script>
 <script type="x-shader/x-fragment" id="h_frag">
     #version 100
+
     precision mediump float;
 
     uniform float       t;
@@ -65,17 +67,79 @@
     uniform sampler2D   tex_color;
     uniform sampler2D   tex_normal;
 
+    varying vec4        epos;
     varying vec2        tc;
-    varying vec3        pos;
-    varying vec3        tan;
     varying vec3        norm;
+    varying vec3        tan;
 
-    uniform struct Light { vec3 pos, color; } lights[16];
+    uniform struct Light { vec4 pos, color; } lights[16];
+
     uniform int         num_lights;
+    uniform int         render_mode;
+    uniform int         isTexNormExist;
+    uniform int         isTexTypeHeight;
+
+    vec4 calc_diffuse(vec3 N, vec3 pos)
+    {
+        vec4 factor = vec4(0);
+       for (int i = 0; i < 10000000; i++)
+        {
+            if (i >= num_lights) break;
+            vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
+            factor += max(dot(L, N), 0.0) * vec4(lights[i].color.rgb, 1);
+        }
+        return factor;
+    }
+
+    vec4 calc_specular(vec3 N, vec3 pos, float shininess)
+    {
+        vec4 factor = vec4(0);
+        for (int i = 0; i < 10000000; i++)
+        {
+            if (i >= num_lights) break;
+
+            vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
+            vec3 H = normalize(L + normalize(-pos));
+            float f = pow(max(dot(N, H), 0.0), shininess);
+            factor += f * vec4(lights[i].color.rgb, 1) * lights[i].color.a;
+        }
+        return factor;
+    }
+
+    vec3 calc_normal(vec3 norm, vec3 tan, sampler2D NRM, vec2 coord) {
+        vec3 tangent = tan;
+
+        vec3 binorm = normalize(cross(norm, tangent));
+        vec3 dnorm = texture2D(NRM, coord).xyz;
+        vec3 dnormal = normalize(2.0 * dnorm - 1.0);
+
+        return mat3(tangent, binorm, norm) * dnormal;
+    }
+
+    vec4 phong(vec4 epos, vec3 norm, vec2 tc)
+    {
+
+        vec3 normal = normalize(norm);
+
+        if (isTexNormExist == 1)
+            normal = calc_normal(normal, tan, tex_normal, tc);
+
+        vec4 diffuse = texture2D(tex_color, tc);
+        diffuse = calc_diffuse(normal, epos.xyz) * diffuse;
+
+        float shininess = 16.0;
+        vec4 specular = vec4(0.4, 0.4, 0.4, 1.0);
+        specular = calc_specular(normal, epos.xyz, shininess) * specular;
+
+        vec4 res = diffuse + specular;
+        res.a = 1.0;
+        return res;
+    }
 
     void main() {
-        gl_FragColor = texture2D(tex_color, tc);
-        gl_FragColor = vec4(tan, 1.0);
+        if (render_mode == 0) { gl_FragColor = phong(epos, norm, tc); }
+        else if (render_mode == 1) { gl_FragColor = texture2D(tex_color, tc); }
+        else { gl_FragColor = vec4(tan, 1.0); }
     }
 </script>
 <script type="x-shader/x-vertex" id="skybox_vert">

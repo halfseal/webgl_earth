@@ -21,7 +21,6 @@ export class VO {
         this.gl = gl;
 
         let tan1 = new Array(vertices.length).fill(vec3.create());
-        console.table(tan1);
 
         for (let i = 0; i < indices.length; i += 3) {
             let v0 = vertices[indices[i + 0]].pos;
@@ -38,6 +37,8 @@ export class VO {
             let du1 = vec2.subtract(vec2.create(), u1, u0);
             let du2 = vec2.subtract(vec2.create(), u2, u0);
 
+            // r : determinant
+            // https://learnopengl.com/Advanced-Lighting/Normal-Mapping
             let r = 1.0 / (du1[0] * du2[1] - du2[0] * du1[1]);
             let tan = vec3.scale(
                 vec3.create(),
