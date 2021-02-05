@@ -1,24 +1,30 @@
 import {VO, Vertex} from "../glfunctions/VO.js";
 import {Program} from "../glfunctions/Program.js";
 
+const {mat4, mat3, vec3, vec2} = glMatrix;
+
 export class Skybox {
     texID = null;
     gl;
     prog;
     vo;
 
-    scale_mx = glMatrix.mat4.create();
-    rotate_mx = glMatrix.mat4.create();
-    trans_mx = glMatrix.mat4.create();
+    scale_mx = mat4.create();
+    rotate_mx = mat4.create();
+    trans_mx = mat4.create();
 
-    vert = new Vertex();
+    vertices = [];
     indices = [];
 
     getSRT() {
-        let mat4 = glMatrix.mat4.create();
-        let res = glMatrix.mat4.multiply(mat4, this.scale_mx, mat4);
-        res = glMatrix.mat4.multiply(mat4, this.rotate_mx, res);
-        return glMatrix.mat4.multiply(mat4, this.trans_mx, res);
+        let res = glMatrix.mat4.multiply(mat4.create(), this.scale_mx, mat4.create());
+        res = glMatrix.mat4.multiply(mat4.create(), this.rotate_mx, res);
+        return glMatrix.mat4.multiply(mat4.create(), this.trans_mx, res);
+    }
+
+    update(delta) {
+        mat4.rotate(this.rotate_mx, this.rotate_mx, delta / 30,
+            vec3.normalize(vec3.create(), vec3.fromValues(0.0, 10.0, 3.0)));
     }
 
     constructor(gl, path, faces) {
@@ -49,13 +55,11 @@ export class Skybox {
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
                 gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
-                gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_R, gl.CLAMP_TO_EDGE);
             }
         }
 
         for (let i = 0; i < faces.length; i++) {
             faces[i] = path + faces[i];
-            // console.log(faces[i]);
 
             let image = new Image();
             image.onload = e => {
@@ -74,9 +78,16 @@ export class Skybox {
             image.src = faces[i];
         }
 
-        this.vert.pos = [[20, 20, 20], [20, 20, -20], [20, -20, 20], [20, -20, -20], [-20, 20, 20], [-20, 20, -20], [-20, -20, 20], [-20, -20, -20]];
-        this.vert.norm = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
-        this.vert.tc = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
+        this.vertices = [
+            new Vertex(vec3.fromValues(20, 20, 20)),
+            new Vertex(vec3.fromValues(20, 20, -20)),
+            new Vertex(vec3.fromValues(20, -20, 20)),
+            new Vertex(vec3.fromValues(20, -20, -20)),
+            new Vertex(vec3.fromValues(-20, 20, 20)),
+            new Vertex(vec3.fromValues(-20, 20, -20)),
+            new Vertex(vec3.fromValues(-20, -20, 20)),
+            new Vertex(vec3.fromValues(-20, -20, -20))
+        ];
 
         this.indices = [
             5, 7, 3, 3, 1, 5,
@@ -87,6 +98,6 @@ export class Skybox {
             7, 6, 3, 3, 6, 2
         ];
 
-        this.vo = new VO(gl, this.prog, this.vert.pos, this.vert.norm, this.vert.tc, this.indices);
+        this.vo = new VO(gl, this.prog, this.vertices, this.indices);
     }
 }

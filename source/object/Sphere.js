@@ -2,22 +2,24 @@ import {status} from "./Status.js";
 import {VO, Vertex} from "../glfunctions/VO.js";
 import {Texture} from "../glfunctions/Texture.js";
 
+const {mat4, mat3, vec3, vec2} = glMatrix;
+
 export class Sphere {
     tex;
     vo;
 
-    scale_mx = glMatrix.mat4.create();
-    rotate_mx = glMatrix.mat4.create();
-    trans_mx = glMatrix.mat4.create();
+    scale_mx = mat4.create();
+    rotate_mx = mat4.create();
+    trans_mx = mat4.create();
 
-    xyz_to_rhc = glMatrix.mat4.fromValues(
+    xyz_to_rhc = mat4.fromValues(
         0, 1, 0, 0,
         0, 0, 1, 0,
         1, 0, 0, 0,
         0, 0, 0, 1
     );
 
-    vert = new Vertex();
+    vertices = [];
     indices = [];
 
     t = 0;
@@ -25,24 +27,23 @@ export class Sphere {
     update(delta) {
         if (!status.is_update) return;
         this.rotate_mx =
-            glMatrix.mat4.rotate(
-                glMatrix.mat4.create(),
+            mat4.rotate(
+                mat4.create(),
                 this.rotate_mx,
                 delta,
-                glMatrix.vec3.fromValues(0.0, 1.0, 0.0)
+                vec3.fromValues(0.0, 1.0, 0.0)
             );
     }
 
     getSRT() {
-        let mat4 = glMatrix.mat4.create();
-        let res = glMatrix.mat4.multiply(mat4, this.scale_mx, this.xyz_to_rhc);
-        res = glMatrix.mat4.multiply(mat4, this.rotate_mx, res);
-        return glMatrix.mat4.multiply(mat4, this.trans_mx, res);
+        let res = mat4.multiply(mat4.create(), this.scale_mx, this.xyz_to_rhc);
+        res = mat4.multiply(mat4.create(), this.rotate_mx, res);
+        return mat4.multiply(mat4.create(), this.trans_mx, res);
     }
 
     constructor(gl, prog, path, need_flip) {
         this.tex = new Texture(gl, path, need_flip);
-        this.xyz_to_rhc = glMatrix.mat4.transpose(glMatrix.mat4.create(), this.xyz_to_rhc);
+        this.xyz_to_rhc = mat4.transpose(mat4.create(), this.xyz_to_rhc);
 
         const longitude_num = 72;
         const latitude_num = 36;
@@ -68,9 +69,11 @@ export class Sphere {
                 const tx = long_degree / (2 * Math.PI);
                 const ty = 1.0 - (lat_degree / Math.PI);
 
-                this.vert.pos.push([x, y, z]);
-                this.vert.norm.push([nx, ny, nz]);
-                this.vert.tc.push([tx, ty]);
+                let vertex = new Vertex();
+                vertex.pos = vec3.fromValues(x, y, z);
+                vertex.norm = vec3.fromValues(nx, ny, nz);
+                vertex.tc = vec2.fromValues(tx, ty);
+                this.vertices.push(vertex);
             }
         }
 
@@ -89,6 +92,6 @@ export class Sphere {
             }
         }
 
-        this.vo = new VO(gl, prog, this.vert.pos, this.vert.norm, this.vert.tc, this.indices);
+        this.vo = new VO(gl, prog, this.vertices, this.indices);
     }
 }

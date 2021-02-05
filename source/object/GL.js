@@ -5,13 +5,15 @@ import {Texture} from "../glfunctions/Texture.js";
 import {status} from "./Status.js";
 import {cam, key} from "../glfunctions/Camera.js";
 import {Skybox} from "./Skybox.js";
+import {OBJ} from "../../OBJ.js";
 
 let gl;
 let prog;
-let t = 0.0;
-let sphere;
 
+let sphere;
 let skybox;
+
+let mountain = new OBJ();
 
 export function glStart(canvas) {
     gl = canvas.getContext("webgl");
@@ -23,6 +25,7 @@ export function glStart(canvas) {
 
 function update(delta) {
     key.update(delta, cam);
+    skybox.update(delta);
     sphere.update(delta);
 }
 
@@ -33,14 +36,14 @@ function render() {
 
     let skyProg = skybox.prog;
     skyProg.bind();
-    skyProg.uniformMat4("view_mx", false, cam.get_view());
-    skyProg.uniformMat4("proj_mx", false, cam.get_proj());
+    skyProg.uniformMat4("cam.view_mx", false, cam.get_view());
+    skyProg.uniformMat4("cam.proj_mx", false, cam.get_proj());
     skybox.draw();
 
     prog.bind();
     prog.uniform1f("t", 0.5 * Math.cos(t) + 0.5);
-    prog.uniformMat4("view_mx", false, cam.get_view());
-    prog.uniformMat4("proj_mx", false, cam.get_proj());
+    prog.uniformMat4("cam.view_mx", false, cam.get_view());
+    prog.uniformMat4("cam.proj_mx", false, cam.get_proj());
 
     sphere.draw();
 }
@@ -57,6 +60,8 @@ function initGLSetting() {
 }
 
 function initVariables() {
+    mountain.readFile("./source/model/BaseSpiderMan.obj")
+
     prog = new Program(gl,
         document.querySelector("#h_vert").innerHTML,
         document.querySelector("#h_frag").innerHTML
@@ -94,7 +99,7 @@ function initDrawFunc() {
     }
 }
 
-let t0 = 0.0;
+let t = 0.0, t0 = 0.0;
 
 function loop(time) {
     time *= 0.001;  // convert millisecond to second

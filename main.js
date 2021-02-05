@@ -6,6 +6,7 @@ let canvas;
 let container;
 
 window.onload = function () {
+
     canvas = document.querySelector("#glCanvas");
     container = document.querySelector("#glContainer");
 
