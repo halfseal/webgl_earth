@@ -12,7 +12,7 @@ let prog;
 let sphere;
 let skybox;
 
-let mountain = new OBJ();
+// let mountain = new OBJ();
 let light = new Light();
 
 export function glStart(canvas) {
@@ -65,7 +65,7 @@ function initGLSetting() {
 }
 
 function initVariables() {
-    mountain.readFile("./source/model/BaseSpiderMan.obj")
+    // mountain.readFile("./source/model/BaseSpiderMan.obj")
 
     prog = new Program(gl,
         document.querySelector("#h_vert").innerHTML,
