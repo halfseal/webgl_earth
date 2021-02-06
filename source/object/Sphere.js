@@ -6,7 +6,9 @@ const {mat4, mat3, vec3, vec2} = glMatrix;
 
 export class Sphere {
     tex;
-    texNRM;
+    texNorm;
+    texSpec;
+    texDark;
     vo;
 
     scale_mx = mat4.create();
@@ -62,9 +64,9 @@ export class Sphere {
                 const x = radius * Math.sin(lat_degree) * Math.cos(long_degree);
                 const y = radius * Math.sin(lat_degree) * Math.sin(long_degree);
                 const z = radius * Math.cos(lat_degree);
+                const ny = Math.sin(lat_degree) * Math.sin(long_degree);
 
                 const nx = Math.sin(lat_degree) * Math.cos(long_degree);
-                const ny = Math.sin(lat_degree) * Math.sin(long_degree);
                 const nz = Math.cos(lat_degree);
 
                 const tx = long_degree / (2 * Math.PI);

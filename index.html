@@ -66,6 +66,8 @@
 
     uniform sampler2D   tex_color;
     uniform sampler2D   tex_normal;
+    uniform sampler2D   tex_spec;
+    uniform sampler2D   tex_Dark;
 
     varying vec4        epos;
     varying vec2        tc;
@@ -77,7 +79,9 @@
     uniform int         num_lights;
     uniform int         render_mode;
     uniform int         isTexNormExist;
-    uniform int         isTexTypeHeight;
+    uniform int         isTexSpecExist;
+    uniform int         isTexDarkExist;
+    uniform int         isSetAlpha;
 
     vec4 calc_diffuse(vec3 N, vec3 pos)
     {
@@ -86,7 +90,7 @@
         {
             if (i >= num_lights) break;
             vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
-            factor += max(dot(L, N), 0.0) * vec4(lights[i].color.rgb, 1);
+            factor += max(dot(L, N), 0.01) * vec4(lights[i].color.rgb, 1);
         }
         return factor;
     }
@@ -127,12 +131,27 @@
         vec4 diffuse = texture2D(tex_color, tc);
         diffuse = calc_diffuse(normal, epos.xyz) * diffuse;
 
+        float avg = (diffuse.x + diffuse.y + diffuse.z) / 3.0;
+        if (isTexDarkExist == 1 && avg < 0.05) {
+            vec4 texDark = texture2D(tex_Dark, tc);
+            avg = (texDark.x + texDark.y + texDark.z) / 3.0;
+            if (avg > 0.1)
+                diffuse = texDark;
+        }
+
         float shininess = 16.0;
-        vec4 specular = vec4(0.4, 0.4, 0.4, 1.0);
+        vec4 specular = vec4(0.7, 0.7, 0.7, 1.0);
+
+        if (isTexSpecExist == 1)
+            specular *= texture2D(tex_spec, tc);
+
         specular = calc_specular(normal, epos.xyz, shininess) * specular;
 
         vec4 res = diffuse + specular;
         res.a = 1.0;
+        if (isSetAlpha == 1)
+            res.a = diffuse.x;
+
         return res;
     }
 
