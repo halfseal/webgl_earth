@@ -116,7 +116,6 @@
         vec3 binorm = normalize(cross(norm, tangent));
         vec3 dnorm = texture2D(NRM, coord).xyz;
         vec3 dnormal = normalize(2.0 * dnorm - 1.0);
-
         return mat3(tangent, binorm, norm) * dnormal;
     }
 
@@ -129,13 +128,13 @@
         vec4 diffuse = texture2D(tex_color, tc);
         diffuse = calc_diffuse(normal, epos.xyz) * diffuse;
 
-//        float avg = (diffuse.x + diffuse.y + diffuse.z) / 3.0;
-//        if (isTexDarkExist == 1 && avg < 0.05) {
-//            vec4 texDark = texture2D(tex_Dark, tc);
-//            avg = (texDark.x + texDark.y + texDark.z) / 3.0;
-//            if (avg > 0.1)
-//            diffuse += texDark;
-//        }
+        float avg = (diffuse.x + diffuse.y + diffuse.z) / 3.0;
+        if (isTexDarkExist == 1 && avg < 0.05) {
+            vec4 texDark = texture2D(tex_Dark, tc);
+            avg = (texDark.x + texDark.y + texDark.z) / 3.0;
+            if (avg > 0.1)
+            diffuse += texDark;
+        }
 
         float shininess = 16.0;
         vec4 specular = vec4(0.4, 0.4, 0.4, 1.0);
