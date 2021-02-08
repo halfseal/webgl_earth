@@ -28,7 +28,6 @@ export class Sphere {
     t = 0;
 
     update(delta) {
-        if (!status.is_update) return;
         this.rotate_mx =
             mat4.rotate(
                 mat4.create(),

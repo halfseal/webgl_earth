@@ -29,7 +29,8 @@ export function glStart(canvas) {
 
 function update(delta) {
     key.update(delta, cam);
-    skybox.update(delta);
+    if (!status.is_update) return;
+    skybox.update(delta * 0.01);
     sphere.update(delta);
     cloud_sphere.update(delta * 0.8);
 }

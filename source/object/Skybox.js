@@ -23,7 +23,7 @@ export class Skybox {
     }
 
     update(delta) {
-        mat4.rotate(this.rotate_mx, this.rotate_mx, delta / 30,
+        mat4.rotate(this.rotate_mx, this.rotate_mx, delta,
             vec3.normalize(vec3.create(), vec3.fromValues(0.0, 10.0, 3.0)));
     }
 
