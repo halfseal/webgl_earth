@@ -87,9 +87,9 @@
     {
         //        const int i = 0;
         vec4 factor = vec4(0);
-        for (int i = 0; i < 10000000; i++)
+        for (int i = 0; i < 1; i++)
         {
-            if (i >= 1) break;
+//            if (i >= 1) break;
             vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
             factor += max(dot(L, N), 0.01) * vec4(lights[i].color.rgb, 1);
         }
@@ -100,9 +100,9 @@
     {
         //        const int i = 0;
         vec4 factor = vec4(0);
-        for (int i = 0; i < 10000000; i++)
+        for (int i = 0; i < 1; i++)
         {
-            if (i >= 1) break;
+//            if (i >= 1) break;
             vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
             vec3 H = normalize(L + normalize(-pos));
             float f = pow(max(dot(N, H), 0.0), shininess);
@@ -123,7 +123,6 @@
 
     vec4 phong(vec4 epos, vec3 norm, vec2 tc)
     {
-
         vec3 normal = normalize(norm);
 
         if (isTexNormExist == 1) normal = calc_normal(normal, tan, tex_normal, tc);
@@ -140,7 +139,7 @@
         }
 
         float shininess = 16.0;
-        vec4 specular = vec4(0.4, 0.4, 0.4, 1.0);
+        vec4 specular = vec4(0.3, 0.3, 0.3, 1.0);
 
         if (isTexSpecExist == 1) specular = max(specular,texture2D(tex_spec, tc));
 
