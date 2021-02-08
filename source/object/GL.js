@@ -36,6 +36,9 @@ function update(delta) {
 }
 
 function render() {
+    let errorEnum = gl.getError();
+    if (errorEnum !== gl.NO_ERROR) enumToMsg(errorEnum);
+
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     cam.aspect = status.screen_size[0] / status.screen_size[1];
@@ -171,4 +174,23 @@ function loop(time) {
         t0 = t1;
     }
     window.requestAnimationFrame(loop);
+}
+
+function enumToMsg(err) {
+    switch (err) {
+        case gl.NO_ERROR :
+            return "No error has been recorded.";
+        case gl.INVALID_ENUM :
+            return "An unacceptable value has been specified for an enumerated argument.";
+        case gl.INVALID_VALUE :
+            return "A numeric argument is out of range.";
+        case gl.INVALID_OPERATION :
+            return "The specified command is not allowed for the current state.";
+        case gl.INVALID_FRAMEBUFFER_OPERATION :
+            return "The currently bound framebuffer is not framebuffer complete when trying to render to or to read from it.";
+        case gl.OUT_OF_MEMORY :
+            return "Not enough memory is left to execute the command.";
+        case gl.CONTEXT_LOST_WEBGL :
+            return "If the WebGL context is lost, this error is returned on the first call to getError.";
+    }
 }
