@@ -15,7 +15,7 @@ export class Light {
 
     data;
 
-    constructor(numLights = 2) {
+    constructor(numLights = 1) {
         this.num_lights = numLights;
         this.data = new Array(numLights);
         for (let i = 0; i < this.data.length; i++) this.data[i] = new this.Data();
