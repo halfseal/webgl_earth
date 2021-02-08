@@ -85,30 +85,29 @@
 
     vec4 calc_diffuse(vec3 N, vec3 pos)
     {
-        const int i = 0;
+        //        const int i = 0;
         vec4 factor = vec4(0);
-//       for (int i = 0; i < 10000000; i++)
-//        {
-//            if (i >= num_lights) break;
+        for (int i = 0; i < 10000000; i++)
+        {
+            if (i >= 1) break;
             vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
             factor += max(dot(L, N), 0.01) * vec4(lights[i].color.rgb, 1);
-//        }
+        }
         return factor;
     }
 
     vec4 calc_specular(vec3 N, vec3 pos, float shininess)
     {
-        const int i = 0;
+        //        const int i = 0;
         vec4 factor = vec4(0);
-//        for (int i = 0; i < 10000000; i++)
-//        {
-//            if (i >= num_lights) break;
-
+        for (int i = 0; i < 10000000; i++)
+        {
+            if (i >= 1) break;
             vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
             vec3 H = normalize(L + normalize(-pos));
             float f = pow(max(dot(N, H), 0.0), shininess);
             factor += f * vec4(lights[i].color.rgb, 1) * lights[i].color.a;
-//        }
+        }
         return factor;
     }
 
@@ -128,7 +127,7 @@
         vec3 normal = normalize(norm);
 
         if (isTexNormExist == 1)
-            normal = calc_normal(normal, tan, tex_normal, tc);
+        normal = calc_normal(normal, tan, tex_normal, tc);
 
         vec4 diffuse = texture2D(tex_color, tc);
         diffuse = calc_diffuse(normal, epos.xyz) * diffuse;
@@ -138,21 +137,21 @@
             vec4 texDark = texture2D(tex_Dark, tc);
             avg = (texDark.x + texDark.y + texDark.z) / 3.0;
             if (avg > 0.1)
-                diffuse = texDark;
+            diffuse = texDark;
         }
 
         float shininess = 16.0;
         vec4 specular = vec4(0.7, 0.7, 0.7, 1.0);
 
         if (isTexSpecExist == 1)
-            specular *= texture2D(tex_spec, tc);
+        specular *= texture2D(tex_spec, tc);
 
         specular = calc_specular(normal, epos.xyz, shininess) * specular;
 
         vec4 res = diffuse + specular;
         res.a = 1.0;
         if (isSetAlpha == 1)
-            res.a = diffuse.x;
+        res.a = diffuse.x;
 
         return res;
     }
