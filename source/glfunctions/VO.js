@@ -20,7 +20,8 @@ export class VO {
     constructor(gl, prog, vertices, indices, indexType) {
         this.gl = gl;
 
-        let tan1 = new Array(vertices.length).fill(vec3.create());
+        let tan1 = new Array(vertices.length);
+        for (let i = 0; i < tan1.length; i++) tan1[i] = vec3.create();
 
         for (let i = 0; i < indices.length; i += 3) {
             let v0 = vertices[indices[i + 0]].pos;

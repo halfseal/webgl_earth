@@ -46,7 +46,9 @@ export class Skybox {
         }
         gl.bindTexture(gl.TEXTURE_CUBE_MAP, null);
 
-        let isLoaded = new Array(6).fill(false);
+        let isLoaded = new Array(6);
+        for (let i = 0; i < isLoaded.length; i++) isLoaded[i] = false;
+
         let setTexParam = () => {
             if (isLoaded[0] && isLoaded[1] && isLoaded[2] && isLoaded[3] && isLoaded[4] && isLoaded[5]) {
                 console.log("Successfully loaded skybox");

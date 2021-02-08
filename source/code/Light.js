@@ -4,15 +4,22 @@ export class Light {
     MAX_LIGHT = 16;
     num_lights;
     Data = class {
-        pos = vec4.create();
-        color = vec4.create();
+        pos;
+        color;
+
+        constructor() {
+            this.pos = vec4.create();
+            this.color = vec4.create();
+        }
     }
 
     data;
 
-    constructor(numLights = 1) {
+    constructor(numLights = 2) {
         this.num_lights = numLights;
-        this.data = new Array(numLights).fill(new this.Data());
+        this.data = new Array(numLights);
+        for (let i = 0; i < this.data.length; i++) this.data[i] = new this.Data();
+
         this.data[0].pos = vec4.fromValues(10, 0, 1, 1);
         this.data[0].color = vec4.fromValues(0.8, 0.7, 0.6, 1.0);
     }
