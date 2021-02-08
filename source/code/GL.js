@@ -94,26 +94,26 @@ function initVariables() {
 function initDrawFunc() {
     sphere.draw = () => {
         prog.bind();
-        gl.activeTexture(gl.TEXTURE0);
+        gl.activeTexture(gl.TEXTURE1);
         gl.bindTexture(gl.TEXTURE_2D, sphere.tex.id);
-        prog.uniform1i("tex_color", 0);
+        prog.uniform1i("tex_color", 1);
 
         prog.uniform1i("render_mode", 0);
 
         prog.uniform1i("isTexNormExist", 1);
-        gl.activeTexture(gl.TEXTURE1);
+        gl.activeTexture(gl.TEXTURE2);
         gl.bindTexture(gl.TEXTURE_2D, sphere.texNorm.id);
-        prog.uniform1i("tex_normal", 1);
+        prog.uniform1i("tex_normal", 2);
 
         prog.uniform1i("isTexSpecExist", 1);
-        gl.activeTexture(gl.TEXTURE2);
+        gl.activeTexture(gl.TEXTURE3);
         gl.bindTexture(gl.TEXTURE_2D, sphere.texSpec.id);
-        prog.uniform1i("tex_spec", 2);
+        prog.uniform1i("tex_spec", 3);
 
         prog.uniform1i("isTexDarkExist", 1);
-        gl.activeTexture(gl.TEXTURE3);
+        gl.activeTexture(gl.TEXTURE4);
         gl.bindTexture(gl.TEXTURE_2D, sphere.texDark.id);
-        prog.uniform1i("tex_Dark", 3);
+        prog.uniform1i("tex_Dark", 4);
 
         prog.uniformMat4("model_mx", false, sphere.getSRT());
         sphere.vo.bind(prog);
@@ -129,9 +129,9 @@ function initDrawFunc() {
         gl.enable(gl.BLEND);
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
 
-        gl.activeTexture(gl.TEXTURE0);
+        gl.activeTexture(gl.TEXTURE1);
         gl.bindTexture(gl.TEXTURE_2D, cloud_sphere.tex.id);
-        prog.uniform1i("tex_color", 0);
+        prog.uniform1i("tex_color", 1);
 
         prog.uniform1i("render_mode", 0);
         prog.uniform1i("isSetAlpha", 1);
@@ -148,8 +148,8 @@ function initDrawFunc() {
         let skyProg = skybox.prog;
         skyProg.bind();
         gl.disable(gl.DEPTH_TEST);
-        gl.activeTexture(gl.TEXTURE0);
-        skyProg.uniform1i("skybox", 0);
+        gl.activeTexture(gl.TEXTURE1);
+        skyProg.uniform1i("skybox", 1);
         gl.bindTexture(gl.TEXTURE_CUBE_MAP, skybox.texID);
         skyProg.uniformMat4("model_mx", false, skybox.getSRT());
         skybox.vo.bind(skyProg);

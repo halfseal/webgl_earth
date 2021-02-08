@@ -1,5 +1,5 @@
-import {glStart} from "./source/object/GL.js"
-import {status} from "./source/object/Status.js";
+import {glStart} from "./source/code/GL.js"
+import {status} from "./source/code/Status.js";
 import {cam, mouse, key} from "./source/glfunctions/Camera.js";
 
 let canvas;

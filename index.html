@@ -129,7 +129,7 @@
             normal = calc_normal(normal, tan, tex_normal, tc);
 
         vec4 diffuse = texture2D(tex_color, tc);
-        diffuse = calc_diffuse(normal, epos.xyz) * diffuse;
+//        diffuse = calc_diffuse(normal, epos.xyz) * diffuse;
 
         float avg = (diffuse.x + diffuse.y + diffuse.z) / 3.0;
         if (isTexDarkExist == 1 && avg < 0.05) {
@@ -145,7 +145,7 @@
         if (isTexSpecExist == 1)
             specular *= texture2D(tex_spec, tc);
 
-        specular = calc_specular(normal, epos.xyz, shininess) * specular;
+//        specular = calc_specular(normal, epos.xyz, shininess) * specular;
 
         vec4 res = diffuse + specular;
         res.a = 1.0;
