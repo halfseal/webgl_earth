@@ -32,7 +32,7 @@ function update(delta) {
     if (!status.is_update) return;
     skybox.update(delta * 0.01);
     sphere.update(delta);
-    cloud_sphere.update(delta * 0.8);
+    cloud_sphere.update(delta * 0.7);
 }
 
 function render() {
@@ -87,7 +87,7 @@ function initVariables() {
     sphere.texSpec = new Texture(gl, "./source/image/2k_earth_specular_map.png", true);
     sphere.texDark = new Texture(gl, "./source/image/2k_earth_nightmap.jpg", true);
     cloud_sphere = new Sphere(gl, prog, "./source/image/2k_earth_clouds.jpg", true);
-    cloud_sphere.scale_mx = mat4.scale(mat4.create(), cloud_sphere.scale_mx, vec3.fromValues(1.02, 1.02, 1.02));
+    cloud_sphere.scale_mx = mat4.scale(mat4.create(), cloud_sphere.scale_mx, vec3.fromValues(1.001, 1.001, 1.001));
     skybox = new Skybox(gl, "./source/image/", ["ypos.png", "yneg.png", "zpos.png", "zneg.png", "xpos.png", "xneg.png"]);
 }
 

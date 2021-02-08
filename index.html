@@ -113,7 +113,6 @@
 
     vec3 calc_normal(vec3 norm, vec3 tan, sampler2D NRM, vec2 coord) {
         vec3 tangent = tan;
-
         vec3 binorm = normalize(cross(norm, tangent));
         vec3 dnorm = texture2D(NRM, coord).xyz;
         vec3 dnormal = normalize(2.0 * dnorm - 1.0);
@@ -135,11 +134,11 @@
             vec4 texDark = texture2D(tex_Dark, tc);
             avg = (texDark.x + texDark.y + texDark.z) / 3.0;
             if (avg > 0.1)
-            diffuse = texDark;
+            diffuse += texDark;
         }
 
         float shininess = 16.0;
-        vec4 specular = vec4(0.3, 0.3, 0.3, 1.0);
+        vec4 specular = vec4(0.4, 0.4, 0.4, 1.0);
 
         if (isTexSpecExist == 1) specular = max(specular,texture2D(tex_spec, tc));
 

@@ -13,7 +13,7 @@ export class Light {
     constructor(numLights = 1) {
         this.num_lights = numLights;
         this.data = new Array(numLights).fill(new this.Data());
-        this.data[0].pos = vec4.fromValues(5, 5, 5, 1);
+        this.data[0].pos = vec4.fromValues(10, 0, 1, 1);
         this.data[0].color = vec4.fromValues(0.8, 0.7, 0.6, 1.0);
     }
 
@@ -36,7 +36,6 @@ export class Light {
             );
 
             prog.uniform4fv(light__ + ".pos", eye_coord_light);
-            // prog.uniform4fv(light__ + ".pos", this.data[i].pos);
             prog.uniform4fv(light__ + ".color", this.data[i].color);
         }
     }
