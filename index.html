@@ -60,7 +60,9 @@
 <script type="x-shader/x-fragment" id="h_frag">
     #version 100
 
-    precision highp float;
+    precision mediump float;
+
+    const int           MAX_LIGHT = 16;
 
     uniform float       t;
 
@@ -87,9 +89,9 @@
     {
         //        const int i = 0;
         vec4 factor = vec4(0);
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < MAX_LIGHT; i++)
         {
-//            if (i >= 1) break;
+            if (i >= 1) break;
             vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
             factor += max(dot(L, N), 0.01) * vec4(lights[i].color.rgb, 1);
         }
@@ -100,9 +102,9 @@
     {
         //        const int i = 0;
         vec4 factor = vec4(0);
-        for (int i = 0; i < 1; i++)
+        for (int i = 0; i < MAX_LIGHT; i++)
         {
-//            if (i >= 1) break;
+            if (i >= 1) break;
             vec3 L = normalize(lights[i].pos.xyz - pos * lights[i].pos.a);
             vec3 H = normalize(L + normalize(-pos));
             float f = pow(max(dot(N, H), 0.0), shininess);
