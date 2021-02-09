@@ -17,7 +17,7 @@ export class VO {
     id = 0;
     gl;
 
-    constructor(gl, prog, vertices, indices, indexType) {
+    constructor(gl, prog, vertices, indices) {
         this.gl = gl;
 
         let tan1 = new Array(vertices.length);

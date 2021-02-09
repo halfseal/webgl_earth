@@ -1,3 +1,5 @@
+const {mat4, mat3, vec3, vec2} = glMatrix;
+
 export class OBJ {
     lines;
 
@@ -25,7 +27,7 @@ export class OBJ {
 
     handleObj() {
         // console.log(this.lines.length);
-        for (let i = 0; i < 10; i++) {
+        for (let i = 0; i < this.lines.length; i++) {
             let line = this.lines[i];
             let items = line.replace(/\s\s+/g, ' ').trim().split(' ');
 
@@ -36,16 +38,28 @@ export class OBJ {
                 case "o" :
                     break;
 
-                case "v" :
+                case "v" : {
+                    let x = parseFloat(items[1]);
+                    let y = parseFloat(items[2]);
+                    let z = parseFloat(items[3]);
+                    this.pos.push(vec3.fromValues(x, y, z));
                     break;
-
-                case "vt" :
+                }
+                case "vt" : {
+                    let x = parseFloat(items[1]);
+                    let y = parseFloat(items[2]);
+                    this.tc.push(vec3.fromValues(x, y));
                     break;
-
-                case "vn" :
+                }
+                case "vn" : {
+                    let x = parseFloat(items[1]);
+                    let y = parseFloat(items[2]);
+                    let z = parseFloat(items[3]);
+                    this.norm.push(vec3.fromValues(x, y, z));
                     break;
-
+                }
                 case "f" :
+                    console.log(items[1],items[2],items[3],items[4])
                     break;
 
                 case "mtllib" :
