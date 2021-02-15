@@ -48,7 +48,8 @@
     varying vec3        norm;
     varying vec3        tan;
 
-    void main() {
+    void main()
+    {
         vec4 wpos = model_mx * vec4(position, 1.0);
         epos = cam.view_mx * wpos;
         gl_Position = cam.proj_mx * epos;
@@ -111,7 +112,8 @@
         return factor;
     }
 
-    vec3 calc_normal(vec3 norm, vec3 tan, sampler2D NRM, vec2 coord) {
+    vec3 calc_normal(vec3 norm, vec3 tan, sampler2D NRM, vec2 coord)
+    {
         vec3 tangent = tan;
         vec3 binorm = normalize(cross(norm, tangent));
         vec3 dnorm = texture2D(NRM, coord).xyz;
@@ -150,7 +152,8 @@
         return res;
     }
 
-    void main() {
+    void main()
+    {
         if (render_mode == 0) { gl_FragColor = phong(epos, norm, tc); }
         else if (render_mode == 1) { gl_FragColor = texture2D(tex_color, tc); }
         else { gl_FragColor = vec4(tan, 1.0); }
@@ -175,7 +178,8 @@
     varying vec3        norm;
     varying vec3        tan;
 
-    void main() {
+    void main()
+    {
         tc = position;
         vec4 pos = cam.proj_mx * mat4(mat3(cam.view_mx)) * model_mx * vec4(position, 1.0);
         gl_Position = pos.xyww;
@@ -193,7 +197,8 @@
 
     varying vec3        tc;
 
-    void main() {
+    void main()
+    {
         gl_FragColor = textureCube(skybox, tc);
     }
 </script>
